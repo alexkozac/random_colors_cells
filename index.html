@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<body>
+  <div class="container">
+    <div class="cells cells_1"></div>
+    <div class="cells cells_2"></div>
+    <div class="cells cells_3"></div>
+  </div>
+  
+  <script>
+    function RandomColor() {
+      const hue = Math.floor(Math.random() * 360);
+      const saturation = Math.floor(Math.random() * 100) + "%";
+      const lightness = Math.floor(Math.random() * 100) + "%"; 
+      const alpha = Math.random();
+  
+      return `hsla(${hue}, ${saturation}, ${lightness}, ${alpha})`;
+    }
+  
+    function addHTML(element) {
+      let newDiv = document.createElement("div");
+      newDiv.classList.add("cells", "cells_4");
+      
+      for (let i = 0; i < 4; i++) {
+        let button = document.createElement("button");
+        button.classList.add("click");
+        button.onclick = function() {
+          addHTML(this);
+        };
+        newDiv.appendChild(button);
+        let color = RandomColor();
+        button.style.backgroundColor = color;
+      }
+  
+      element.replaceWith(newDiv);
+    }
+  
+    let cells = document.querySelectorAll('.container .cells');
+    cells.forEach(cell => {
+      if (cell.classList.contains('cells_3')) { 
+        for (let i = 0; i < 25; i++) { 
+          let button = document.createElement("button");
+          button.classList.add("click");
+          button.onclick = function() {
+            addHTML(this);
+          };
+          cell.appendChild(button);
+          let color = RandomColor();
+          button.style.backgroundColor = color;
+        }
+      } else {
+        for (let i = 0; i < 4; i++) {
+          let button = document.createElement("button");
+          button.classList.add("click");
+          button.onclick = function() {
+            addHTML(this);
+          };
+          cell.appendChild(button);
+          let color = RandomColor();
+          button.style.backgroundColor = color;
+        }
+      }
+    });
+  </script>
+  
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      height: 100vh;
+      width: 100vw;
+    }
+  
+    .cells {
+      display: grid;
+      width: 100%;
+      height: 100%;
+    }
+  
+    .cells_1 {
+      grid-template-rows: repeat(5, 1fr);
+    }
+  
+    .cells_2 {
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+    }
+  
+    .cells_3 {
+      grid-template-columns: repeat(5, 1fr);
+      grid-template-rows: repeat(5, 1fr);
+    }
+  
+    .cells_4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  
+    .click {
+      background-color: var(--main-bg-color);
+      border: none;
+      max-width: 100%;
+      max-height: 100%;
+    }
+  </style>
+  
+    
+</body>
+</html>
